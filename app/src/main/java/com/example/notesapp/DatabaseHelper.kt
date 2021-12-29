@@ -44,4 +44,14 @@ class DatabaseHelper(context: Context): SQLiteOpenHelper(context,"details.db", n
         }
         return notes
     }
+
+    fun updateData(note: Note, text: String){
+        val contentValues = ContentValues()
+        contentValues.put("Text", text)
+        sqLiteDatabase.update("notes", contentValues, "pk = ${note.pk}", null)
+    }
+
+    fun deleteData(note: Note){
+        sqLiteDatabase.delete("notes", "pk = ${note.pk}", null)
+    }
 }

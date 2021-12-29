@@ -10,7 +10,7 @@ import androidx.recyclerview.widget.RecyclerView
 
 class MainActivity : AppCompatActivity() {
 
-    private val databaseHelper by lazy { DatabaseHelper(applicationContext) }
+    val databaseHelper by lazy { DatabaseHelper(applicationContext) }
 
     lateinit var editText: EditText
     lateinit var button: Button
@@ -22,6 +22,9 @@ class MainActivity : AppCompatActivity() {
     var list = arrayListOf<Note>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
+
+        Shared.main = this
+
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
@@ -34,16 +37,15 @@ class MainActivity : AppCompatActivity() {
         button = findViewById(R.id.button)
 
         button.setOnClickListener {
-            databaseHelper.saveData(editText.text.toString())
-            Toast.makeText(this, "Added successfully", Toast.LENGTH_LONG).show()
+            if(editText.text.isNotEmpty()){
+                databaseHelper.saveData(editText.text.toString())
+                Toast.makeText(this, "Added successfully", Toast.LENGTH_LONG).show()
+                rvAdapter.update(databaseHelper.getData())
+                editText.text.clear()
+            }
         }
 
-        getData = findViewById(R.id.getData)
-
-        getData.setOnClickListener {
-            Toast.makeText(this, "Added successfully", Toast.LENGTH_LONG).show()
-            rvAdapter.update(databaseHelper.getData())
-        }
+        rvAdapter.update(databaseHelper.getData())
 
     }
 }
