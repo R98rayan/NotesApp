@@ -2,6 +2,7 @@ package com.example.notesapp
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.os.Handler
 import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
@@ -45,15 +46,24 @@ class MainActivity : AppCompatActivity() {
             if(editText.text.isNotEmpty()){
                 CoroutineScope(IO).launch {
                     noteDao.addNote(Note(0, editText.text.toString()))
-
-                    rvAdapter.update(noteDao.getNotes())
-                    editText.text.clear()
+                    Shared.notes = noteDao.getNotes()
                 }
+                Handler().postDelayed({
+                    rvAdapter.update(Shared.notes)
+                    editText.text.clear()
+                }, 200)
+
                 Toast.makeText(this, "Added successfully", Toast.LENGTH_LONG).show()
             }
         }
 
-        rvAdapter.update(noteDao.getNotes())
+        CoroutineScope(IO).launch {
+            Shared.notes = noteDao.getNotes()
+        }
+        Handler().postDelayed({
+            rvAdapter.update(Shared.notes)
+            editText.text.clear()
+        }, 200)
 
     }
 }
