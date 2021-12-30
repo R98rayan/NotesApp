@@ -1,4 +1,4 @@
-package com.example.notesapp
+package com.example.notesapp.SQLite
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -7,15 +7,11 @@ import android.widget.EditText
 import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers.IO
-import kotlinx.coroutines.launch
+import com.example.notesapp.R
 
 class MainActivity : AppCompatActivity() {
 
-   val noteDao by lazy { NoteDatabase.getDatabase(this).noteDao() }
-
-    var selectedNote: Note? = null
+    val databaseHelper by lazy { DatabaseHelper(applicationContext) }
 
     lateinit var editText: EditText
     lateinit var button: Button
@@ -43,17 +39,14 @@ class MainActivity : AppCompatActivity() {
 
         button.setOnClickListener {
             if(editText.text.isNotEmpty()){
-                CoroutineScope(IO).launch {
-                    noteDao.addNote(Note(0, editText.text.toString()))
-
-                    rvAdapter.update(noteDao.getNotes())
-                    editText.text.clear()
-                }
+                databaseHelper.saveData(editText.text.toString())
                 Toast.makeText(this, "Added successfully", Toast.LENGTH_LONG).show()
+                rvAdapter.update(databaseHelper.getData())
+                editText.text.clear()
             }
         }
 
-        rvAdapter.update(noteDao.getNotes())
+        rvAdapter.update(databaseHelper.getData())
 
     }
 }

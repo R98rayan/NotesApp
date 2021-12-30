@@ -1,4 +1,4 @@
-package com.example.notesapp
+package com.example.notesapp.SQLite
 
 import android.app.AlertDialog
 import android.view.LayoutInflater
@@ -9,9 +9,7 @@ import kotlinx.android.synthetic.main.item_row.view.*
 import android.content.DialogInterface
 import android.text.InputType
 import android.widget.EditText
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers.IO
-import kotlinx.coroutines.launch
+import com.example.notesapp.R
 
 
 class RVAdapter(private var list: List<Note>): RecyclerView.Adapter<RVAdapter.ItemViewHolder>() {
@@ -39,10 +37,8 @@ class RVAdapter(private var list: List<Note>): RecyclerView.Adapter<RVAdapter.It
                     .setPositiveButton(android.R.string.yes,
                         DialogInterface.OnClickListener { dialog, which ->
                             // Continue with delete operation
-//                            CoroutineScope(IO).launch {
-//                                Shared.main.noteDao.deleteNote(item)
-//                                update(Shared.main.noteDao.getNotes())
-//                            }
+                            Shared.main.databaseHelper.deleteData(item)
+                            update(Shared.main.databaseHelper.getData())
                         }) // A null listener allows the button to dismiss the dialog and take no further action.
                     .setNegativeButton(android.R.string.no, null)
                     .setIcon(android.R.drawable.ic_dialog_alert)
@@ -65,11 +61,8 @@ class RVAdapter(private var list: List<Note>): RecyclerView.Adapter<RVAdapter.It
                 builder.setPositiveButton("OK", DialogInterface.OnClickListener { dialog, which ->
                     // Here you get get input text from the Edittext
                     var m_Text = input.text.toString()
-//                    CoroutineScope(IO).launch {
-//                        item.text = m_Text
-//                        Shared.main.noteDao.updateNote(item)
-//                        update(Shared.main.noteDao.getNotes())
-//                    }
+                    Shared.main.databaseHelper.updateData(item, m_Text)
+                    update(Shared.main.databaseHelper.getData())
                 })
                 builder.setNegativeButton("Cancel", DialogInterface.OnClickListener { dialog, which -> dialog.cancel() })
 
