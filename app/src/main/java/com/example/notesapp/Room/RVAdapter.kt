@@ -1,4 +1,4 @@
-package com.example.notesapp
+package com.example.notesapp.Room
 
 import android.app.AlertDialog
 import android.view.LayoutInflater
@@ -10,6 +10,7 @@ import android.content.DialogInterface
 import android.os.Handler
 import android.text.InputType
 import android.widget.EditText
+import com.example.notesapp.R
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.launch
@@ -42,10 +43,10 @@ class RVAdapter(private var list: List<Note>): RecyclerView.Adapter<RVAdapter.It
                             // Continue with delete operation
                             CoroutineScope(IO).launch {
                                 Shared.main.noteDao.deleteNote(item)
-                                Shared.main.myViewModel.notes = Shared.main.noteDao.getNotes()
+                                Shared.notes = Shared.main.noteDao.getNotes()
                             }
                             Handler().postDelayed({
-                                update(Shared.main.myViewModel.notes)
+                                update(Shared.notes)
                             }, 200)
                         }) // A null listener allows the button to dismiss the dialog and take no further action.
                     .setNegativeButton(android.R.string.no, null)
@@ -72,10 +73,10 @@ class RVAdapter(private var list: List<Note>): RecyclerView.Adapter<RVAdapter.It
                     CoroutineScope(IO).launch {
                         item.text = m_Text
                         Shared.main.noteDao.updateNote(item)
-                        Shared.main.myViewModel.notes = Shared.main.noteDao.getNotes()
+                        Shared.notes = Shared.main.noteDao.getNotes()
                     }
                     Handler().postDelayed({
-                        update(Shared.main.myViewModel.notes)
+                        update(Shared.notes)
                     }, 200)
                 })
                 builder.setNegativeButton("Cancel", DialogInterface.OnClickListener { dialog, which -> dialog.cancel() })

@@ -1,4 +1,4 @@
-package com.example.notesapp
+package com.example.notesapp.Room
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -6,17 +6,16 @@ import android.os.Handler
 import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
-import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.notesapp.R
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.launch
 
 class MainActivity : AppCompatActivity() {
 
-    val noteDao by lazy { NoteDatabase.getDatabase(this).noteDao() }
-    val myViewModel by lazy { ViewModelProvider(this).get(MyViewModel::class.java) }
+   val noteDao by lazy { NoteDatabase.getDatabase(this).noteDao() }
 
     var selectedNote: Note? = null
 
@@ -48,10 +47,10 @@ class MainActivity : AppCompatActivity() {
             if(editText.text.isNotEmpty()){
                 CoroutineScope(IO).launch {
                     noteDao.addNote(Note(0, editText.text.toString()))
-                    myViewModel.notes = noteDao.getNotes()
+                    Shared.notes = noteDao.getNotes()
                 }
                 Handler().postDelayed({
-                    rvAdapter.update(myViewModel.notes)
+                    rvAdapter.update(Shared.notes)
                     editText.text.clear()
                 }, 200)
 
@@ -60,10 +59,10 @@ class MainActivity : AppCompatActivity() {
         }
 
         CoroutineScope(IO).launch {
-            myViewModel.notes = noteDao.getNotes()
+            Shared.notes = noteDao.getNotes()
         }
         Handler().postDelayed({
-            rvAdapter.update(myViewModel.notes)
+            rvAdapter.update(Shared.notes)
             editText.text.clear()
         }, 200)
 
