@@ -3,6 +3,7 @@ plugins {
     id 'kotlin-android'
     id 'kotlin-android-extensions'
     id 'kotlin-kapt'
+    id 'com.google.gms.google-services'
 }
 
 android {
@@ -35,6 +36,8 @@ android {
 
 dependencies {
 
+    implementation "dev.sasikanth:colorsheet:1.0.1"
+
     implementation 'com.google.code.gson:gson:2.8.8'
     implementation 'com.squareup.retrofit2:retrofit:2.9.0'
     implementation 'com.squareup.retrofit2:converter-gson:2.9.0'
@@ -47,6 +50,8 @@ dependencies {
     // Room components
     implementation "androidx.room:room-runtime:2.4.0"
     implementation "androidx.room:room-ktx:2.4.0"
+    implementation 'com.google.firebase:firebase-firestore:21.4.0'
+    implementation 'androidx.constraintlayout:constraintlayout:2.1.2'
     kapt  "androidx.room:room-compiler:2.4.0"
 
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:1.4.1"

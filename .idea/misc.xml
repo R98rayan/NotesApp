@@ -3,8 +3,11 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
-        <entry key="..\:/Users/R98rayan/AndroidStudioProjects/NotesApp/app/src/main/res/layout/activity_main.xml" value="0.26296296296296295" />
-        <entry key="..\:/Users/R98rayan/AndroidStudioProjects/NotesApp/app/src/main/res/layout/item_row.xml" value="0.31203703703703706" />
+        <entry key="..\:/Users/R98rayan/AndroidStudioProjects/NotesApp/app/src/main/res/drawable/ic_richardtallent_sticky_note_pad.xml" value="0.41510416666666666" />
+        <entry key="..\:/Users/R98rayan/AndroidStudioProjects/NotesApp/app/src/main/res/layout/activity_main.xml" value="0.33" />
+        <entry key="..\:/Users/R98rayan/AndroidStudioProjects/NotesApp/app/src/main/res/layout/activity_welcome.xml" value="0.31203703703703706" />
+        <entry key="..\:/Users/R98rayan/AndroidStudioProjects/NotesApp/app/src/main/res/layout/item_row.xml" value="0.5" />
+        <entry key="..\:/Users/R98rayan/AndroidStudioProjects/NotesApp/app/src/main/res/layout/item_row2.xml" value="0.31203703703703706" />
       </map>
     </option>
   </component>
