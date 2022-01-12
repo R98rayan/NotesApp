@@ -1,4 +1,4 @@
-package com.example.notesapp
+package com.example.notesapp.Navigation
 
 import android.util.Log
 import com.google.firebase.firestore.FirebaseFirestore
@@ -9,7 +9,11 @@ import com.google.firebase.firestore.QuerySnapshot
 import androidx.annotation.NonNull
 
 import com.google.android.gms.tasks.OnCompleteListener
-import kotlinx.android.synthetic.main.activity_main.*
+
+
+
+
+
 
 
 data class Note(
@@ -54,7 +58,7 @@ data class Note(
             .update("description", description)
             .addOnSuccessListener {
                 Log.d(TAG, "DocumentSnapshot successfully updated!")
-                Shared.noteFragment.rvAdapter.update(notes)
+                Shared.main.rvAdapter.update(notes)
             }
             .addOnFailureListener { e -> Log.w(TAG, "Error updating document", e) }
     }
@@ -67,7 +71,7 @@ data class Note(
             .update("title", title)
             .addOnSuccessListener {
                 Log.d(TAG, "DocumentSnapshot successfully updated!")
-                Shared.noteFragment.rvAdapter.update(notes)
+                Shared.main.rvAdapter.update(notes)
             }
             .addOnFailureListener { e -> Log.w(TAG, "Error updating document", e) }
     }
@@ -85,7 +89,7 @@ data class Note(
             .addOnSuccessListener {
                 Log.d(TAG, "DocumentSnapshot successfully updated!")
                 a1 = true
-                if(a1 && a2 && a3) Shared.noteFragment.rvAdapter.update(notes)
+                if(a1 && a2 && a3) Shared.main.rvAdapter.update(notes)
             }
             .addOnFailureListener { e -> Log.w(TAG, "Error updating document", e) }
 
@@ -94,7 +98,7 @@ data class Note(
             .addOnSuccessListener {
                 Log.d(TAG, "DocumentSnapshot successfully updated!")
                 a2 = true
-                if(a1 && a2 && a3) Shared.noteFragment.rvAdapter.update(notes)
+                if(a1 && a2 && a3) Shared.main.rvAdapter.update(notes)
             }
             .addOnFailureListener { e -> Log.w(TAG, "Error updating document", e) }
 
@@ -103,7 +107,7 @@ data class Note(
             .addOnSuccessListener {
                 Log.d(TAG, "DocumentSnapshot successfully updated!")
                 a3 = true
-                if(a1 && a2 && a3) Shared.noteFragment.rvAdapter.update(notes)
+                if(a1 && a2 && a3) Shared.main.rvAdapter.update(notes)
             }
             .addOnFailureListener { e -> Log.w(TAG, "Error updating document", e) }
 
@@ -149,7 +153,7 @@ data class Note(
                     }
 
                     notes = tempNotes
-                    Shared.noteFragment.rvAdapter.update(notes)
+                    Shared.main.rvAdapter.update(notes)
                 }
                 .addOnFailureListener { exception ->
                     Log.d(TAG, "Error getting documents: ", exception)
